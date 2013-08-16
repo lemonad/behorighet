@@ -1,3 +1,15 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Criterion, MetCriterion
+
+
+class CriterionAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(Criterion, CriterionAdmin)
+
+
+class MetCriterionAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(MetCriterion, MetCriterionAdmin)

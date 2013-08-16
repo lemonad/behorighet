@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Qualification
+
+
+class QualificationAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(Qualification, QualificationAdmin)

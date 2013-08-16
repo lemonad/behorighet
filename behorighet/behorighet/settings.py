@@ -21,10 +21,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '!p9_7j2m_dkw3@kt8=m12ahqpgwh6!1-et)pvrrch)!g0s+6(*'
 
-ADMINS = (
-    ('jnt', 'jnt@ksu.se'),
-    )
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -47,12 +43,14 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.webdesign',
     # Pip installed
-    'debug_toolbar',
-    'debug_toolbar_htmltidy',
+    # 'debug_toolbar',
+    # 'debug_toolbar_htmltidy',
     'south',
     # Local
     'criteria',
+    'demo',
     'qualifications',
+    'units',
     'users',
 )
 
@@ -64,7 +62,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'behorighet.urls'
@@ -100,7 +98,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Auth
-AUTH_USER_MODEL = 'users.MyUser'
+AUTH_USER_MODEL = 'users.UserProfile'
 
 # The below LOGIN_URL and LOGOUT_URL doesn't seem to be used
 # except when unit testing views.
