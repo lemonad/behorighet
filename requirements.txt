@@ -5,7 +5,7 @@ easy_thumbnails
 markdown
 mock
 pep8
-PIL
+Pillow
 simplejson
 south
--e git://github.com/django/django.git#egg=Django
+-e git+https://github.com/django/django.git#egg=Django
