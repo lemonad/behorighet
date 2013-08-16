@@ -1,0 +1,11 @@
+django-debug-toolbar
+django-dtpanel-htmltidy
+docutils
+easy_thumbnails
+markdown
+mock
+pep8
+PIL
+simplejson
+south
+-e git://github.com/django/django.git#egg=Django
