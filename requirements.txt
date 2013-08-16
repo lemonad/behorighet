@@ -1,10 +1,5 @@
-django-debug-toolbar
-django-dtpanel-htmltidy
-docutils
 easy_thumbnails
 markdown
-mock
-pep8
 Pillow
 simplejson
 south
