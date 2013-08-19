@@ -71,5 +71,6 @@ class MetCriterion(Model):
                                     self.date_met.date())
 
     class Meta:
-        verbose_name = _('criterion')
-        verbose_name_plural = _('criteria')
+        unique_together = ('user', 'criterion')
+        verbose_name = _('met criterion')
+        verbose_name_plural = _('met criteria')

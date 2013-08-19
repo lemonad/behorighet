@@ -8,8 +8,17 @@ from criteria.models import Criterion, MetCriterion
 from qualifications.models import Qualification
 
 
-class UserQualificationsManager(Manager):
-    pass
+class UserUnitManager(Manager):
+    def users_in_units(self, units):
+        unit_ids = []
+        for u in units:
+            unit_ids.append(u.id)
+
+        users = super(UserUnitManager, self) \
+            .get_query_set() \
+            .filter(unit__id__in=unit_ids)
+
+        return users
 
 
 class UserProfile(AbstractUser):
@@ -25,29 +34,49 @@ class UserProfile(AbstractUser):
                                    db_index=True)
 
     objects = UserManager()
-    qualification_objects = UserQualificationsManager()
+    unit_related = UserUnitManager()
+
+    def _criteria_ids_met(self):
+        """Returns a list of ids of the criteria the user has met."""
+        return self.met_criteria.values_list('id', flat=True)
+
+    def has_met_qualifications(self, qualifications):
+        """Has the user met the given qualifications?
+
+        Returns True if all given qualifications has been met
+
+        """
+        criteria_met = self._criteria_ids_met()
+
+        qualification_ids = []
+        for q in qualifications:
+            qualification_ids.append(q.id)
+
+        criteria = Criterion.objects \
+            .filter(qualification__id__in=qualification_ids) \
+            .values_list('id', flat=True)
+
+        return set(criteria).issuperset(set(criteria_met))
 
     def qualifications(self):
+        """Which qualifications has the user met?
+
+        Returns a list of qualification query objects.
+
+        """
         # TODO Should be limited to the qualifications belonging to
         # TODO the user's units?
-        # units = self.units_set.all()
-        # print units
 
-        criterias_met = self.met_criteria.values_list('id', flat=True)
+        criteria_met = self._criteria_ids_met()
 
-        potential_qualifications = Qualification.objects.filter(criteria__in=criterias_met)
+        potential_qualifications = Qualification.objects \
+            .filter(criteria__in=criteria_met)
+
+        qualifications_met = []
         for pq in potential_qualifications:
             pqc = pq.criteria.values_list('id', flat=True)
-            TODO xyz
+            if set(pqc).issubset(set(criteria_met)):
+                qualifications_met.append(pq.id)
 
-
-        qualifications = []
-        qualifications = qualifications.all()
-
-            for uq in unit_qualifications:
-                uqc = uq.criteria.all()
-
-
-
-
-        qualifications = Qualification
+        q = Qualification.objects.filter(id__in=qualifications_met)
+        return q

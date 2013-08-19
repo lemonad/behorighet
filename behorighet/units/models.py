@@ -8,7 +8,16 @@ from qualifications.models import Qualification
 
 
 class UnitManager(Manager):
-    pass
+    def qualifications_in_units(self, units):
+        # TODO Union or intersection of qualifications?
+        unit_ids = []
+        for u in units:
+            unit_ids.append(u.id)
+
+        qualifications = Qualification.objects \
+            .filter(unit__id__in=unit_ids)
+
+        return qualifications
 
 
 class Unit(Model):
@@ -47,6 +56,34 @@ class Unit(Model):
 
     def __unicode__(self):
         return self.name
+
+    def per_qualification_statistics(self):
+        """Qualification statistics on a unit level.
+
+        Returns a list of...
+
+        """
+        # TODO Should be limited to the qualifications belonging to
+        # TODO the unit?
+        stats = []
+
+        for q in self.qualifications.all():
+            criteria_ids = q.criteria.values_list('id', flat=True)
+            print self.members \
+                .filter(met_criteria__id__in=criteria_ids) \
+                .distinct()
+            n_users_met_qualification = self.members \
+                .filter(met_criteria__id__in=criteria_ids) \
+                .distinct() \
+                .count()
+            stats.append((q, n_users_met_qualification))
+
+        return stats
+
+    def per_user_statistics(self):
+        # TODO Should be limited to the qualifications belonging to
+        # TODO the unit?
+        pass
 
     class Meta:
         verbose_name = _('unit')
