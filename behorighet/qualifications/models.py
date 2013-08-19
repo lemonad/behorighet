@@ -7,7 +7,12 @@ from criteria.models import Criterion
 
 
 class QualificationManager(Manager):
-    pass
+    qualifications = super(QualificationManager, self).get_query_set().all()
+    criteria_per_qualification = []
+    for q in qualifications:
+        criteria_ids = q.criteria.values_list('id', flat=True).order_by('id')
+        criteria_per_qualification.append((q.id, criteria_ids))
+    return criteria_per_qualification
 
 
 class Qualification(Model):
