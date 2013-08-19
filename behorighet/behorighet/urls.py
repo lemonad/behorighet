@@ -7,6 +7,7 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     (r'^criteria/', include('criteria.urls')),
+    (r'^login/', include('login.urls')),
     (r'^qualifications/', include('qualifications.urls')),
     (r'^units/', include('units.urls')),
     (r'^users/', include('users.urls')),
