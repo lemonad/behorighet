@@ -1,1 +1,37 @@
-Should user qualifications be narrowed down to the ones that are within the user's units?
+Questions
+---------
+*  Should user's visible qualifications be limited to the units they belong
+   to? What if they change units?
+*  Should user qualifications be narrowed down to the ones that are within
+   the user's units?
+*  Should criteria changes *always* have an immediate effect on
+   qualifications?
+   -  Or should it sometimes be delayed? I.e. Some kind of grace period
+      (time or event based).
+   -  should qualifications sometimes be permanent, like badges — once
+      received it could not be revoked, the changes in criteria only
+      having an effect on people not qualified?
+* Should selecting sets of units/users report unions or intersections of
+  qualifications in term of statistics?
+
+
+Permanent "cache" of qualifications?
+------------------------------------
+Would have to respond to changes in criteria:
+*  If deleted:
+   *  Is it the last criterion in a qualification, then either:
+      a)  Delete this qualification for all matching users
+      b)  Add this qualification to all users (since it has no
+          criteria, everyone meets the qualification bar)
+Would have to respond to changes in qualifications:
+*  If deleted:
+   *  Traverse all users and delete qualification.
+*  If added:
+   *  Traverse all users and add qualifications for those matching
+      the respective criteria.
+(Potentially) Would have to respond to changes in unit list of qualifications:
+*  If added:
+   *  None
+*  If deleted:
+   *  Traverse users in unit and delete qualifications UNLESS they also
+      belong to another unit in which the qualification still stands.
