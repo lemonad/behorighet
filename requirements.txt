@@ -1,3 +1,4 @@
+django-compressor
 easy_thumbnails
 markdown
 Pillow

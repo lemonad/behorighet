@@ -1,0 +1,58 @@
+{% load compress i18n staticfiles %}{% load url from future %}<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>{{ site_name }}</title>
+
+  <meta name="title" content="{{ site_name }}" />
+  <meta name="author" content="Jonas Nockert" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="shortcut icon" href="{% static "favicon.ico" %}" />
+
+  {% block feeds %}{% endblock %}
+
+  {% compress css %}
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static "bootstrap-3.0.0-wip/dist/css/bootstrap.min.css" %}"
+        charset="utf-8" />
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static "css/behorighet-bootstrap.css" %}"
+        media="screen, projection"
+        charset="utf-8" />
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static "css/behorighet-bootstrap-print.css" %}"
+        media="print"
+        charset="utf-8" />
+  {% endcompress %}
+  {% block css %}{% endblock %}
+
+  <!--[if IE]>
+    <script src="{% static "js/html5shiv-printshiv.js" %}"></script>
+  <![endif]-->
+  {% compress js %}
+  <script type="text/javascript"
+          src="{% static "js/jquery-1.10.2.min.js" %}"
+          charset="utf-8"></script>
+  <script type="text/javascript"
+          src="{% static "bootstrap-3.0.0-wip/dist/js/bootstrap.min.js" %}"
+          charset="utf-8"></script>
+  <script type="text/javascript">
+    function elementSupportsAttribute(element, attribute) {
+        var test = document.createElement(element);
+        return (attribute in test);
+    }
+  </script>
+  {% endcompress %}
+  {% block javascript %}{% endblock %}
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  {% block body %}{% endblock %}
+</body>
+</html>

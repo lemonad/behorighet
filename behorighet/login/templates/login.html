@@ -1,0 +1,85 @@
+{% extends "base-without-sidebar.html" %}
+{% load i18n %}
+{% load url from future %}
+{% block metatitle %}{% trans "Log in" %}{% endblock %}
+{% block reporterrorlink %}{% url "errorreport" %}?url={% url "login" %}{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#id_username").focus();
+  });
+</script>
+{% endblock %}
+
+{% block main %}
+  <h2>{% trans "Log in" %}</h2>
+
+  {% for error in form.non_field_errors %}
+  <div class="alert alert-error">
+    <span class="badge badge-important">!</span>
+    {{ error }}
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  {% endfor %}
+
+  <div class="alert alert-info alert-block">
+    <p>
+      {% blocktrans %}
+      Please observe that if this is your first time logging in, choose
+      the "forgot password" link under the form to create a password.
+      {% endblocktrans %}
+    </p>
+  </div>
+
+  <form class="form-horizontal"
+        method="post"
+        action=".">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}" />
+
+    <div class="control-group{% if form.username.errors %} error{% endif %}">
+      <label class="control-label"
+             for="id_{{form.username.name}}">
+        {{ form.username.label }}
+      </label>
+      <div class="controls">
+        {{ form.username }}
+        {% for error in form.username.errors %}
+        <span class="help-inline">
+          <span class="badge badge-important">!</span>
+          {{ error }}
+        </span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="control-group{% if form.password.errors %} error{% endif %}">
+      <label class="control-label"
+             for="id_{{form.password.name}}">
+        {{ form.password.label }}
+      </label>
+      <div class="controls">
+        {{ form.password }}
+        {% for error in form.password.errors %}
+        <span class="help-inline">
+          <span class="badge badge-important">!</span>
+          {{ error }}
+        </span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <button class="btn btn-primary"
+                type="submit">
+          {% trans "Log in" %}
+        </button>
+        <a class="btn btn-link" href="{% url "password-reset" %}">
+          {% trans "Forgot your password?" %}
+        </a>
+      </div>
+    </div>
+  </form>
+{% endblock %}

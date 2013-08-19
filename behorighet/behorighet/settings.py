@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.webdesign',
     # Pip installed
+    'compressor',
     # 'debug_toolbar',
     # 'debug_toolbar_htmltidy',
     'south',
@@ -63,6 +64,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+)
+
+TEMPLATE_DIRS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.eggs.Loader',
+    'django.template.loaders.app_directories.Loader',
 )
 
 ROOT_URLCONF = 'behorighet.urls'
@@ -92,10 +99,23 @@ LOCALE_PATHS = (
 TIME_ZONE = 'Europe/Stockholm'
 USE_TZ = True
 
+# User-uploaded files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'site_media/media')
+MEDIA_URL = '/site-media/media/'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'site_media/static')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+STATICFILE_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+STATIC_URL = '/site-media/static/'
 
 # Auth
 AUTH_USER_MODEL = 'users.UserProfile'
