@@ -7,7 +7,6 @@ import random
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import User
 
 
 class FakeGenerator:
@@ -37,9 +36,9 @@ class FakeGenerator:
         return date.fromordinal(random.randint(start_date, end_date))
 
     def user(self):
-        User = get_user_model()
+        user_model = get_user_model()
         data = self.users.pop()
-        user = User.objects.create(
+        user = user_model.objects.create(
             first_name=data['first_name'],
             last_name=data['last_name'],
             username=data['username'],
