@@ -11,8 +11,14 @@ Questions
    -  should qualifications sometimes be permanent, like badges — once
       received it could not be revoked, the changes in criteria only
       having an effect on people not qualified?
-* Should selecting sets of units/users report unions or intersections of
-  qualifications in term of statistics?
+*  Should selecting sets of units/users report unions or intersections of
+   qualifications in term of statistics?
+*  Should multiple levels of unit ownership exist? Or should everyone
+   else just see aggregated data and no person-by-person data?
+*  Should criteria build up qualifications using only AND or is OR-logic
+   needed? E.g. Work experience | Education = Qualified.
+   The basis in MetCondition is one way of handling it using the current
+   design.
 
 
 Permanent "cache" of qualifications?
