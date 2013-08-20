@@ -36,6 +36,9 @@ class UserProfile(AbstractUser):
     objects = UserManager()
     unit_related = UserUnitManager()
 
+    def __unicode__(self):
+        return "%s (%s)" % (self.get_full_name(), self.username)
+
     def _criteria_ids_met(self):
         """Returns a list of ids of the criteria the user has met."""
         return self.met_criteria.values_list('id', flat=True)
