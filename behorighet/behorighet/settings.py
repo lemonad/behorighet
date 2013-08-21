@@ -14,7 +14,6 @@ from django.core.urlresolvers import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
@@ -51,6 +50,7 @@ INSTALLED_APPS = (
     'criteria',
     'demo',
     'login',
+    'main',
     'qualifications',
     'units',
     'users',
@@ -68,7 +68,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates'),
+    os.path.join(os.path.dirname(__file__), 'templates'),
 )
 
 TEMPLATE_LOADERS = (
@@ -140,6 +140,11 @@ MESSAGE_TAGS = {message_constants.DEBUG: 'alert-info',
                 message_constants.WARNING: 'alert-warning',
                 message_constants.ERROR: 'alert-error',
                 message_constants.SUCCESS: 'alert-success'}
+
+#
+# compressor
+#
+COMPRESS_ENABLED = False
 
 #
 # debugging

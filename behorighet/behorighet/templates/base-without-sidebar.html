@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block body %}
-  <div class="container">
-    {% include "base-header.html" %}
-    {% include "base-messages.html" %}
+  {% include "base-header.html" %}
+  {% include "base-messages.html" %}
 
+  <div class="container">
     <article id="main-content">
       {% block main %}Main content{% endblock %}
-    </article>
+      </article>
+  </div>
 
+  <div class="container">
     {% include "base-footer.html" %}
   </div><!-- container -->
 {% endblock %}

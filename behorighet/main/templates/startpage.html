@@ -1,0 +1,24 @@
+{% extends "base-without-sidebar.html" %}
+{% load i18n %}
+{% load url from future %}
+{% block metatitle %}{% trans "Start page" %}{% endblock %}
+
+{% block main %}
+  <h2>
+    {% trans "Start page" %}
+  </h2>
+
+  <form>
+    {% for unit in units %}
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="">
+        {{ unit.name }}
+      </label>
+      <a href="#">
+        <span class="glyphicon glyphicon-edit"></span>
+      </a>
+    </div>
+    {% endfor %}
+  </form>
+{% endblock %}

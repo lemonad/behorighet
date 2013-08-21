@@ -1,84 +1,56 @@
 {% load i18n staticfiles %}
 {% load url from future %}
   <header>
-    <div class="navbar">
-      <div class="navbar-inner">
-        <div class="container">
-          <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-          <a class="brand" href="/">
-            <div id="logo"></div>
-          </a> <!-- {{ site_name }} -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button"
+                  class="navbar-toggle"
+                  data-toggle="collapse"
+                  data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">
+            Behörighetstilldelning
+          </a>
           <ul class="nav pull-right">
-              {% if user.is_authenticated %}
-              <li>
-                <a class="dropdown-toggle"
-                   data-toggle="dropdown"
-                   href="#">
-                  {{ user.get_full_name|default:user.username }}
-                  <b class="caret">&nbsp;</b>
-                </a>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a href="{% url "people" user.username %}">{% trans "My profile" %}</a>
-                  </li>
-                  <li>
-                    <a href="{% url "settings" %}">{% trans "Settings" %}</a>
-                  </li>
-                  <li>
-                    <a href="{% url "logout" %}?next={{ request.path|urlencode }}{% if request.META.QUERY_STRING %}?{{ request.META.QUERY_STRING }}{% endif %}">{% trans "Log out" %}</a>
-                  </li>
-                  <li class="divider">&nbsp;</li>
-                  {% if user.is_staff or user.is_superuser %}
-                  <li>
-                    <a href="{% url "administration" %}">{% trans "Administration" %}</a>
-                  </li>
-                  {% endif %}
-                </ul>
-              </li>
-              {% else %}
-              <li>
-                <a href="{% url "login" %}?next={{ request.path|urlencode }}{% if request.META.QUERY_STRING %}?{{ request.META.QUERY_STRING }}{% endif %}">{% trans "Log in" %}</a>
-              </li>
-              {% endif %}
-
+            {% if user.is_authenticated %}
             <li>
               <a class="dropdown-toggle"
                  data-toggle="dropdown"
                  href="#">
-                {% for lcode, lname in LANGUAGES %}
-                {% ifequal LANGUAGE_CODE lcode %}
-                <input type="image" src="{% static "lang/" %}{{ lcode }}.png"
-                       alt="{{ lname }}, {{ LANGUAGE_CODE|slice:":2" }}">
-                {% endifequal %}
-                {% endfor %}
+                {{ user.get_full_name|default:user.username }}
                 <b class="caret">&nbsp;</b>
               </a>
               <ul class="dropdown-menu">
-                {% for lcode, lname in LANGUAGES %}
-                {% ifnotequal LANGUAGE_CODE lcode %}
+                {% comment %}
                 <li>
-                  <form action="/i18n/setlang/" method="post">
-                    {% csrf_token %}
-                    <input name="next" type="hidden" value="/" />
-                    <input name="language" type="hidden" value="{{ lcode }}" />
-                    <input type="image" src="{% static "lang/" %}{{ lcode }}.png"
-                           alt="{{ lname }}, {{ LANGUAGE_CODE|slice:":2" }}">
-                    {{ lname }}
-                  </form>
+                  <a href="{% url "user" user.username %}">{% trans "My profile" %}</a>
                 </li>
-                {% endifnotequal %}
-                {% endfor %}
+                <li>
+                  <a href="{% url "settings" %}">{% trans "Settings" %}</a>
+                </li>
+                {% endcomment %}
+                <li>
+                  <a href="{% url "logout" %}?next={{ request.path|urlencode }}{% if request.META.QUERY_STRING %}?{{ request.META.QUERY_STRING }}{% endif %}">{% trans "Log out" %}</a>
+                </li>
+                <li class="divider">&nbsp;</li>
+                {% comment %}
+                {% if user.is_staff or user.is_superuser %}
+                <li>
+                  <a href="{% url "administration" %}">{% trans "Administration" %}</a>
+                </li>
+                {% endif %}
+                {% endcomment %}
               </ul>
             </li>
-
-            <li style="clear:left;">
-              <form class="navbar-search" action="{% url "search" %}" method="get">
-                <input name="q" type="search" class="search-query"
-                       placeholder="{% trans "name, phone, org..." %}" size="20" />
-                <!-- input type="submit" value="{% trans "search" %}" /-->
-              </form>
+            {% else %}
+            <li>
+              <a href="{% url "login" %}?next={{ request.path|urlencode }}{% if request.META.QUERY_STRING %}?{{ request.META.QUERY_STRING }}{% endif %}">{% trans "Log in" %}</a>
             </li>
-
+            {% endif %}
           </ul>
         </div>
       </div>
