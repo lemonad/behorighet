@@ -1,3 +1,4 @@
 .Python
 *.py[cd]
 *.sqlite3
+behorighet/site_media/
