@@ -1,0 +1,81 @@
+{% extends "base-without-sidebar.html" %}
+{% load compress i18n markdown staticfiles thumbnail %}
+{% load url from future %}
+{% block metatitle %}{{ userinfo.get_full_name }}{% endblock %}
+{% block title %}{% endblock %}
+
+{% block main %}
+<div id="userinformation">
+  <div id="userinfo-header" class="row">
+    <div class="col-md-2 user-avatar">
+      <img class="avatar img-rounded"
+           src="{{ userinfo.get_avatar|thumbnail_url:"avatar" }}"
+           alt="{% trans "Profile photo" %}" />
+    </div>
+    <div class="col-md-10">
+      <h2>
+        {{ userinfo.get_full_name }} <small>@{{ userinfo.username }}</small>
+      </h2>
+
+      <h5>{% trans "Email" %}</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="mailto:{{ userinfo.get_full_name|urlencode }}%20%3c{{ userinfo.email }}%3e">
+            {{ userinfo.email }}
+          </a>
+        </li>
+      </ul>
+
+      {% if units %}
+      <h5>{% trans "Units" %}</h5>
+      <ul class="list-unstyled">
+        {% for u in units %}
+        <li>
+          <a href="#">
+            {{ u.name }} ({{ u.owner }})
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+
+  <h3>
+     {% trans "Qualifications" %}
+  </h3>
+
+  <ul class="list-unstyled">
+    {% for q, met_q, criteria in qualifications %}
+    <li>
+      {% if met_q %}
+      <span class="label label-success">&nbsp;</span>
+      {% else %}
+      <span class="label label-default">&nbsp;</span>
+      {% endif %}
+      {{ q.name }}
+
+      <ul>
+        {% for c, met_c in criteria %}
+        <li>
+          {% if met_c %}
+          <span class="label label-success">&nbsp;</span>
+          {% else %}
+          <span class="label label-default">&nbsp;</span>
+          {% endif %}
+
+          {{ c.name }}
+
+          {% if met_c %}
+          <small class="text-muted">
+            {{ met_c.basis_description }} ({{ met_c.get_basis_display }})
+          </small>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

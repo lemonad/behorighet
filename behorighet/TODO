@@ -19,6 +19,10 @@ Questions
    needed? E.g. Work experience | Education = Qualified.
    The basis in MetCondition is one way of handling it using the current
    design.
+*  If a user belongs to multiple units, should user profile information
+   be shown according to who is viewing (owner A, owner B, the user or
+   guest)? This goes especially for comparative data and qualifications
+   met or not met.
 
 
 Permanent "cache" of qualifications?

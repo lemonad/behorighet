@@ -4,5 +4,7 @@ from django.conf.urls import patterns, url
 urlpatterns = patterns(
     'users.views',
 
-    # url(r'^test$', 'test', name="test"),
+    url(r'^(?P<username>.+?)/$',
+        'user_profile',
+        name="user-profile"),
 )

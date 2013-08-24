@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import os
+
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db.models import Manager, ManyToManyField
 from django.utils.translation import ugettext_lazy as _
@@ -83,3 +86,62 @@ class UserProfile(AbstractUser):
 
         q = Qualification.objects.filter(id__in=qualifications_met)
         return q
+
+    def qualifications_not_met(self):
+        """Which qualifications (in his/her units) has the user not met?
+
+        Returns a list of qualification query objects.
+
+        """
+        # TODO Should be limited to the qualifications belonging to
+        # TODO the user's units?
+
+        qualifications_met = self.qualifications().values_list('id', flat=True)
+        user_units = self.units.values_list('id', flat=True)
+
+        qnm = Qualification.objects \
+            .exclude(id__in=qualifications_met) \
+            .filter(units__in=user_units)
+
+        return qnm
+
+    def qualification_criteria(self, qualification):
+        """ Given a specific qualification, which criteria
+        has the user met and not met?
+
+        Returns a tuple of met criteria and not met criteria
+        lists, each list item a tuple of (criterion, metcriterion),
+        if the criterion is met, or (criterion, None) if not met.
+
+        """
+        criteria_met = []
+        criteria_not_met = []
+        for c in qualification.criteria.all():
+            try:
+                mc = MetCriterion.objects \
+                    .filter(user__id=self.id) \
+                    .filter(criterion__id=c.id) \
+                    .get()
+                criteria_met.append((c, mc))
+            except MetCriterion.DoesNotExist:
+                criteria_not_met.append((c, None))
+        return (criteria_met, criteria_not_met)
+
+    def get_avatar(self):
+        if self.avatar:
+            return self.avatar
+        else:
+            return "avatars/default.jpg"
+
+    def get_avatar_path(self):
+        if self.avatar:
+            return self.avatar.path
+        else:
+            return os.path.join(settings.STATIC_ROOT,
+                                "avatars/default.jpg")
+
+    def get_avatar_url(self):
+        if self.avatar:
+            return self.avatar.url
+        else:
+            return settings.STATIC_URL + "avatars/default.jpg"
