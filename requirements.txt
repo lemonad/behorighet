@@ -1,4 +1,4 @@
-django-compressor
+django-compressor==dev
 easy_thumbnails
 html5lib
 markdown
