@@ -36,7 +36,6 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.formtools',
-    # 'django.contrib.markup',
     'django.contrib.messages',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
@@ -45,8 +44,10 @@ INSTALLED_APPS = (
     'compressor',
     # 'debug_toolbar',
     # 'debug_toolbar_htmltidy',
+    'easy_thumbnails',
     'south',
     # Local
+    'common',
     'criteria',
     'demo',
     'login',
@@ -145,6 +146,18 @@ MESSAGE_TAGS = {message_constants.DEBUG: 'alert-info',
 # compressor
 #
 COMPRESS_ENABLED = False
+
+#
+# Easy-thumbnails
+#
+THUMBNAIL_QUALITY = 95
+THUMBNAIL_EXTENSION = "png"
+THUMBNAIL_BASEDIR = "thumbs"
+THUMBNAIL_ALIASES = {
+    '': {
+        'avatar': {'size': (170, 170), 'crop': True, 'upscale': True},
+    },
+}
 
 #
 # debugging

@@ -31,9 +31,9 @@
   {% endcompress %}
   {% block css %}{% endblock %}
 
-  <!--[if IE]>
-    <script src="{% static "js/html5shiv-printshiv.js" %}"></script>
-  <![endif]-->
+  <script type="text/javascript"
+          src="{% static "js/modernizr.custom.min.js" %}"
+          charset="utf-8"></script>
   {% compress js %}
   <script type="text/javascript"
           src="{% static "js/jquery-1.10.2.min.js" %}"
@@ -41,13 +41,16 @@
   <script type="text/javascript"
           src="{% static "bootstrap-3.0.0/dist/js/bootstrap.min.js" %}"
           charset="utf-8"></script>
-  <script type="text/javascript">
-    function elementSupportsAttribute(element, attribute) {
-        var test = document.createElement(element);
-        return (attribute in test);
-    }
-  </script>
+  <script type="text/javascript"
+          src="{% static "js/chart-0.2.0.min.js" %}"
+          charset="utf-8"></script>
   {% endcompress %}
+  <script type="text/javascript">
+    Modernizr.load({
+      test: Modernizr.canvas,
+      nope: "{% static "js/excanvas.js" %}"
+    });
+  </script>
   {% block javascript %}{% endblock %}
 
   {% block extra_head %}{% endblock %}
