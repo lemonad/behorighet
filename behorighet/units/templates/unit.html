@@ -1,0 +1,89 @@
+{% extends "base-without-sidebar.html" %}
+{% load i18n markdown staticfiles thumbnail %}
+{% load url from future %}
+{% block metatitle %}{{ unit.name }}{% endblock %}
+{% block title %}{% endblock %}
+
+{% block main %}
+  <h2>{{ unitinfo.name }}</h2>
+  <h3>{{ unitinfo.owner.get_full_name }}</h3>
+
+  <ul class="list-unstyled">
+    {% for m in unitinfo.members.all %}
+    <li>
+      <img class="avatar img-rounded"
+           src="{{ m.get_avatar|thumbnail_url:"mini-avatar" }}"
+           alt="{% trans "Profile photo" %}" />
+      <a href="{% url "user-profile" m.username %}">
+        {{ m.get_full_name }}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+
+  <ul class="list-unstyled">
+    {% for q, n_met, n_members in unit_qualification_stats %}
+    <li class="row">
+      <div class="col-md-2">
+        {{ q.name }}
+      </div>
+
+      <div class="col-md-2">
+        <div class="progress">
+          {% if n_met %}
+          <div class="progress-bar progress-bar-success"
+          {% else %}
+          <div class="progress-bar progress-bar-danger"
+          {% endif %}
+               role="progressbar"
+               aria-valuenow="{{ n_met }}"
+               aria-valuemin="0"
+               aria-valuemax="{{ n_members }}"
+               style="width: {% widthratio n_met n_members 100 %}%">
+            <span class="sr-only">{{ n_met }} / {{ n_members }}</span>
+          </div>
+        </div>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% comment %}
+  <h3>
+     {% trans "Qualifications" %}
+  </h3>
+
+  <ul class="list-unstyled">
+    {% for q, met_q, criteria in qualifications %}
+    <li>
+      {% if met_q %}
+      <span class="label label-success">&nbsp;</span>
+      {% else %}
+      <span class="label label-default">&nbsp;</span>
+      {% endif %}
+      {{ q.name }}
+
+      <ul>
+        {% for c, met_c in criteria %}
+        <li>
+          {% if met_c %}
+          <span class="label label-success">&nbsp;</span>
+          {% else %}
+          <span class="label label-default">&nbsp;</span>
+          {% endif %}
+
+          {{ c.name }}
+
+          {% if met_c %}
+          <small class="text-muted">
+            {{ met_c.basis_description }} ({{ met_c.get_basis_display }})
+          </small>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endcomment %}
+{% endblock %}

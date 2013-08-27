@@ -10,6 +10,7 @@ admin.site.register(Criterion, CriterionAdmin)
 
 
 class MetCriterionAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('user', 'criterion', 'basis', 'basis_description')
+    search_fields = ('user__username',)
 
 admin.site.register(MetCriterion, MetCriterionAdmin)

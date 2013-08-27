@@ -19,4 +19,4 @@ def startpage(request):
     # return HttpResponse(t.render(c)).
     return render(request,
                   'startpage.html',
-                  {'units': units,})
+                  {'units': units, })

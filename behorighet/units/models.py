@@ -64,8 +64,9 @@ class Unit(Model):
 
         """
         # TODO Should be limited to the qualifications belonging to
-        # TODO the unit?
+        # TODO the unit or not?
         stats = []
+        n_members = self.members.count()
 
         for q in self.qualifications.all():
             criteria_ids = q.criteria.values_list('id', flat=True)
@@ -76,8 +77,7 @@ class Unit(Model):
                 .filter(met_criteria__id__in=criteria_ids) \
                 .distinct() \
                 .count()
-            stats.append((q, n_users_met_qualification))
-
+            stats.append((q, n_users_met_qualification, n_members))
         return stats
 
     def per_user_statistics(self):

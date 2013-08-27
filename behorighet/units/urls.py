@@ -4,5 +4,5 @@ from django.conf.urls import patterns, url
 urlpatterns = patterns(
     'units.views',
 
-    # url(r'^test$', 'test', name="test"),
+    url(r'^(?P<unitname>.+?)/$', 'unit', name="unit"),
 )

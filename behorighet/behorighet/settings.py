@@ -156,6 +156,7 @@ THUMBNAIL_BASEDIR = "thumbs"
 THUMBNAIL_ALIASES = {
     '': {
         'avatar': {'size': (170, 170), 'crop': True, 'upscale': True},
+        'mini-avatar': {'size': (20, 20), 'crop': True, 'upscale': True},
     },
 }
 
