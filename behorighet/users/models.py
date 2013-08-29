@@ -90,12 +90,10 @@ class UserProfile(AbstractUser):
     def qualifications_not_met(self):
         """Which qualifications (in his/her units) has the user not met?
 
-        Returns a list of qualification query objects.
+        Returns a list of qualification query objects limited by
+        the qualifications in the unit the user belongs to.
 
         """
-        # TODO Should be limited to the qualifications belonging to
-        # TODO the user's units?
-
         qualifications_met = self.qualifications().values_list('id', flat=True)
         user_units = self.units.values_list('id', flat=True)
 
